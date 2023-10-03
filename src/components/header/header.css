@@ -1,0 +1,15 @@
+.header {
+    background-color: steelblue;
+}
+
+.header-title {
+    font-size: 36px;
+}
+
+.header-icon-cart {
+    color: #35735e;
+}
+
+.header-cart >*:not(:last-child) {
+    margin-right: 10px;
+}

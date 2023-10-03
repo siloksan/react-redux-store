@@ -1,0 +1,8 @@
+.book-list {
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+.book-list >*:not(:last-child) {
+    /*margin-bottom: 20px;*/
+}

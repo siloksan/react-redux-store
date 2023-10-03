@@ -21,10 +21,10 @@ const BookList = ({bookServiceContext}) => {
 	}, [])
 
 	return (
-		<ul>
+		<ul className="list-group book-list">
 			{list.map((book) => {
 				return (
-					<li key={book.id}><BookListItem book={book}/></li>
+					<li className="list-group-item card mb-3" key={book.id}><BookListItem book={book}/></li>
 				)
 			})}
 		</ul>
