@@ -1,19 +1,19 @@
-import {ErrorBoundary} from "react-error-boundary";
-import ErrorIndicate from "../error-indicator";
-import {createContext} from "react";
-import BookstoreService from "../../services/bookstore-service";
-export const BookStoreService = createContext(null)
+import {Route, Routes} from "react-router-dom";
+import {CartPage, HomePage} from "../pages";
 
+const App = () => {
 
-function App() {
-
-  return (
-    <ErrorBoundary FallbackComponent={ErrorIndicate}>
-      <BookStoreService.Provider value={BookstoreService}>
-        App
-      </BookStoreService.Provider>
-    </ErrorBoundary>
-  );
+	return (
+		<div>
+			Heda
+			<Routes>
+				<Route path="/" element={<HomePage />} />
+				<Route path="/cart" element={<CartPage />} />
+				App
+				{/*<ErrorButton />*/}
+			</Routes>
+		</div>
+	);
 }
 
 export default App;
