@@ -1,3 +1,3 @@
-import ErrorButtons from './error-buttons'
+import ErrorButton from './error-button'
 
-export default ErrorButtons
+export default ErrorButton

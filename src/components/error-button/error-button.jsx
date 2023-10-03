@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 
-import './error-butons.css'
+import './error-buton.css'
 
-const ErrorButtons = () => {
+const ErrorButton = () => {
 	const [error, setError] = useState(false)
 
 	if (error) {
@@ -18,4 +18,4 @@ const ErrorButtons = () => {
 	);
 };
 
-export default ErrorButtons;
+export default ErrorButton;
