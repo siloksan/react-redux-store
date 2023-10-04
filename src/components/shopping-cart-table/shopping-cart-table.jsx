@@ -1,9 +1,53 @@
+import {connect, useSelector} from "react-redux";
 import React from 'react';
-import ShoppingCartTableItem from "../shopping-cart-table-item/shopping-cart-table-item";
 
 import "./shopping-cart-table.css"
 
-const ShoppingCartTable = ({ total }) => {
+const ShoppingCartTable = ({ onDecrease, onIncrease, onDelete }) => {
+
+	const state = useSelector( state => state.cart)
+	const { cartItems, orderTotal} = state
+
+	const renderRow = (item, idx) => {
+		const {id, name, count, total} = item
+		return (
+			<tr key={item.id}>
+				<th>
+					{idx}
+				</th>
+				<td className="item-title">
+					{name}
+				</td>
+				<td>
+					{count}
+				</td>
+				<td>
+					$ {total}
+				</td>
+				<td className="buttons-group">
+					<button
+						type="button"
+						className="btn btn-outline-warning btn-sm float-right"
+						onClick={() => onDecrease(id)}>
+						<i className="bi bi-dash-circle"></i>
+					</button>
+					<button
+						type="button"
+						className="btn btn-outline-success btn-sm float-right"
+						onClick={() => onIncrease(id)}>
+						<i className="bi bi-plus-circle"></i>
+					</button>
+					<button
+						type="button"
+						className="btn btn-outline-danger btn-sm float-right"
+						onClick={() => onDelete(id)}>
+						<i className="bi bi-trash3"></i>
+					</button>
+				</td>
+			</tr>
+		)
+	}
+
 	return (
 		<div className="shopping-cart">
 			<h2>Your Order</h2>
@@ -18,32 +62,26 @@ const ShoppingCartTable = ({ total }) => {
 				</tr>
 				</thead>
 				<tbody>
-				<tr>
-					<ShoppingCartTableItem
-						num={1}
-						label="Harry Potter and the Sorcerer's Stone"
-						count={2}
-						price={30}/>
-				</tr>
-				<tr>
-					<ShoppingCartTableItem
-						num={1}
-						label="Harry Potter and the Sorcerer's Stone"
-						count={2}
-						price={30}/>
-				</tr>
-				<tr>
-					<ShoppingCartTableItem
-						num={1}
-						label="Harry Potter and the Sorcerer's Stone"
-						count={2}
-						price={30}/>
-				</tr>
+				{ cartItems.map(renderRow) }
 				</tbody>
 			</table>
-			<div className="shopping-cart__total">$ {total}</div>
+			<div className="shopping-cart__total">$ {orderTotal}</div>
 		</div>
 	);
 };
 
-export default ShoppingCartTable;
+const mapDispatchToProps = (dispatch) => {
+	return {
+		onDecrease: (id) => {
+			console.log(`Decrease ${id}`)
+		},
+		onIncrease: (id) => {
+			console.log(`Increase ${id}`)
+		},
+		onDelete: (id) => {
+			console.log(`Delete ${id}`)
+		}
+	}
+}
+
+export default connect(null, mapDispatchToProps)(ShoppingCartTable);

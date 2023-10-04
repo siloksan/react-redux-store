@@ -1,20 +1,5 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {booksError, booksLoader, booksRequested} from "../actions";
+import booksSlice from "./booksSlice"
+import cartSlice from "./cartSlice";
+import {fetchBooks} from "./booksSlice"
 
-const initialState = {
-	list: [],
-	loading: true,
-	error: null,
-}
-
-const booksSlice = createSlice({
-	name: 'books',
-	initialState,
-	reducers: {
-		booksLoader,
-		booksRequested,
-		booksError
-	}
-})
-
-export default booksSlice
+export {fetchBooks, booksSlice, cartSlice}

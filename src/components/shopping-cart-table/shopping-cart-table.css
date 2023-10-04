@@ -8,3 +8,11 @@
     font-size: 1.3rem;
     margin-right: 10px;
 }
+
+.item-title {
+    font-family: "Playfair Display", sans-serif;
+}
+
+.buttons-group > *:not(:last-child) {
+    margin-right: 5px;
+}

@@ -14,4 +14,16 @@ const booksError = (state, action) => {
 	state.error = action.payload
 }
 
-export {booksLoader, booksRequested, booksError}
+const bookAddedToCart = (state, action) => {
+	const bookId = action.payload
+	const book = state.list.find((book) => book.id === bookId)
+	const newItem = {
+		id: book.id,
+		name: book.title,
+		count: 1,
+		total: book.price,
+	}
+	state.cartItems.push(newItem)
+}
+
+export {booksLoader, booksRequested, booksError, bookAddedToCart}

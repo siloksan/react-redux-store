@@ -1,17 +1,19 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect} from 'react';
 import BookListItem from "../book-list-item";
 import {connect, useSelector} from "react-redux";
 import {withBookService} from "../hoc";
 import {compose} from "@reduxjs/toolkit";
 import Spinner from "../spinner";
 import ErrorIndicate from "../error-indicator";
-import booksSlice from "../../reducers";
+import {fetchBooks} from "../../reducers";
+import {cartSlice} from "../../reducers";
 
 import "./book-list.css"
 
-const { booksLoader, booksRequested, booksError } = booksSlice.actions
+const {bookAddedToCart} = cartSlice.actions
 
-const BookList = ({ fetchBooks }) => {
+console.log(bookAddedToCart);
+const BookListContainer = ({ fetchBooks, bookAddedToCart }) => {
 
 	const state = useSelector( state => state.books)
 
@@ -21,44 +23,40 @@ const BookList = ({ fetchBooks }) => {
 		fetchBooks()
 	}, [])
 
-	const renderContent = useMemo(() => {
-		return  list.map((book) => {
-			return (
-				<li className="list-group-item card mb-3" key={book.id}><BookListItem book={book}/></li>
-			)
-		})
-	}, [list])
-
 	if (error) return <ErrorIndicate/>
 
 	return (
 		<ul className="list-group book-list">
 			{loading && <Spinner/>}
-			{renderContent}
+			<BookList list={list} bookAddedToCart={bookAddedToCart}/>
 		</ul>
 	);
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-
-	const { bookServiceContext } = ownProps
+const mapDispatchToProps = (dispatch, { bookServiceContext }) => {
 	return {
-		fetchBooks: () => {
-
-			dispatch(booksRequested())
-			let canceled = false
-			bookServiceContext.getBooks()
-				.then(data => {
-					!canceled && dispatch(booksLoader(data))
-				})
-				.catch((err) => dispatch(booksError(err)))
-
-			return () => canceled = true
-		}
+		fetchBooks: fetchBooks(bookServiceContext, dispatch),
+		bookAddedToCart: (id) => dispatch(bookAddedToCart(id))
 	}
 }
 
 export default compose(
 	withBookService(),
 	connect(null, mapDispatchToProps)
-)(BookList)
+)(BookListContainer)
+
+const BookList = ({ list, bookAddedToCart }) => {
+	return (
+		<>
+			{
+				list.map((book) => {
+					return (
+						<li className="list-group-item card mb-3" key={book.id}>
+							<BookListItem book={book} bookAddedToCart={bookAddedToCart}/>
+						</li>
+					)
+				})
+			}
+		</>
+	)
+}
