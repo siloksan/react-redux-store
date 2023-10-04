@@ -1,15 +1,19 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {booksLoader} from "../actions";
+import {booksError, booksLoader, booksRequested} from "../actions";
 
 const initialState = {
-	list: []
+	list: [],
+	loading: true,
+	error: null,
 }
 
 const booksSlice = createSlice({
 	name: 'books',
 	initialState,
 	reducers: {
-		booksLoader
+		booksLoader,
+		booksRequested,
+		booksError
 	}
 })
 

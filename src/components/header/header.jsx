@@ -8,7 +8,7 @@ const Header = ({ numItems, total }) => {
 		<header className="navbar navbar-expand-lg bd-navbar sticky-top header">
 			<nav className="container-md bd-gutter flex-wrap flex-lg-nowrap header-container">
 				<NavLink className="header-title" to="/">ReStore</NavLink>
-				<div className="header-cart">
+				<NavLink className="header-cart" to="/cart">
 					<span className="header-icon-cart">
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
 						     className="bi bi-cart-fill"
@@ -19,7 +19,7 @@ const Header = ({ numItems, total }) => {
 					</span>
 					<span>{numItems} items</span>
 					<span>($ {total})</span>
-				</div>
+				</NavLink>
 			</nav>
 		</header>);
 };

@@ -8,10 +8,24 @@
     color: #1a0933;
 }
 
+.header-title:hover {
+    font-size: 46px;
+    text-decoration: underline;
+    color: #1a0933;
+}
+
+.header-cart:active {
+    color: #35735e;
+}
+
 .header-icon-cart {
     color: #35735e;
 }
 
 .header-cart >*:not(:last-child) {
     margin-right: 10px;
+}
+
+span:hover {
+    color: inherit;
 }

@@ -1,60 +1,64 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import BookListItem from "../book-list-item";
-import {useDispatch, useSelector} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import {withBookService} from "../hoc";
-import {bindActionCreators, compose} from "@reduxjs/toolkit";
+import {compose} from "@reduxjs/toolkit";
+import Spinner from "../spinner";
+import ErrorIndicate from "../error-indicator";
 import booksSlice from "../../reducers";
 
 import "./book-list.css"
-import Spinner from "../spinner";
-import ErrorIndicate from "../error-indicator";
 
-const BookList = ({ bookServiceContext }) => {
+const { booksLoader, booksRequested, booksError } = booksSlice.actions
 
-	const [state, setState] = useState({
-		data: [],
-		loading: true,
-		error: false
-	})
+const BookList = ({ fetchBooks }) => {
 
-	const { data, loading, error } = state
+	const state = useSelector( state => state.books)
 
-	const list = useSelector( state => state.books.list)
-	const dispatch = useDispatch()
-
-	const { booksLoader } = bindActionCreators(booksSlice.actions, dispatch)
-
-	const onError = () => {
-		setState({...state, error: true})
-	}
+	const { list, loading, error } = state
 
 	useEffect(() => {
-		let canceled = false
-		bookServiceContext.getBooks()
-			.then(data => {
-				!canceled && setState({data, error: false, loading: false})
-			})
-			.catch(onError)
+		fetchBooks()
+	}, [])
 
-		booksLoader(data)
-		return () => canceled = true
-	}, [data])
+	const renderContent = useMemo(() => {
+		return  list.map((book) => {
+			return (
+				<li className="list-group-item card mb-3" key={book.id}><BookListItem book={book}/></li>
+			)
+		})
+	}, [list])
 
-	const renderSpinner = loading && !error ? <Spinner/> : null
-	const renderContent = !(loading || error) ? list.map((book) => {
-		return (
-			<li className="list-group-item card mb-3" key={book.id}><BookListItem book={book}/></li>
-		)
-	}) : null
-	const renderError = error ? <ErrorIndicate/> : null
+	if (error) return <ErrorIndicate/>
 
 	return (
 		<ul className="list-group book-list">
-			{renderSpinner}
+			{loading && <Spinner/>}
 			{renderContent}
-			{renderError}
 		</ul>
 	);
 };
 
-export default compose(withBookService())(BookList)
+const mapDispatchToProps = (dispatch, ownProps) => {
+
+	const { bookServiceContext } = ownProps
+	return {
+		fetchBooks: () => {
+
+			dispatch(booksRequested())
+			let canceled = false
+			bookServiceContext.getBooks()
+				.then(data => {
+					!canceled && dispatch(booksLoader(data))
+				})
+				.catch((err) => dispatch(booksError(err)))
+
+			return () => canceled = true
+		}
+	}
+}
+
+export default compose(
+	withBookService(),
+	connect(null, mapDispatchToProps)
+)(BookList)
