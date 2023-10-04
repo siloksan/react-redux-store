@@ -1,0 +1,7 @@
+.item-title {
+    font-family: "Playfair Display", sans-serif;
+}
+
+.buttons-group > *:not(:last-child) {
+    margin-right: 5px;
+}

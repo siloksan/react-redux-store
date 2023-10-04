@@ -1,6 +1,7 @@
 .book-list {
     margin: 0 auto;
     max-width: 800px;
+    display: flex;
 }
 
 .book-list >*:not(:last-child) {

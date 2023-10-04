@@ -13,7 +13,7 @@ const withDataComponent = (WrappedComponent) => {
 
 		const { data, loading, error } = state
 
-		const getData = props.getData
+		const getData = props.bookServiceContext.getBooks
 
 		const onError = () => {
 			setState({...state, error: true})

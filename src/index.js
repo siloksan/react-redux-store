@@ -7,7 +7,7 @@ import {Provider} from "react-redux";
 import {ErrorBoundary} from "react-error-boundary";
 import BookStoreService from "./services/bookstore-service";
 import {BrowserRouter} from "react-router-dom";
-import 'bootswatch/dist/superhero/bootstrap.min.css'; // Added this :boom:
+// import 'bootswatch/dist/vapor/bootstrap.min.css'; // Added this :boom:
 
 export const BookStoreServiceContext = createContext(null)
 const bookStoreService = new BookStoreService()

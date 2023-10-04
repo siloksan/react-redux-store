@@ -1,0 +1,10 @@
+.shopping-cart {
+    max-width: 1000px;
+    margin: 50px auto 0;
+}
+
+.shopping-cart__total {
+    text-align: right;
+    font-size: 1.3rem;
+    margin-right: 10px;
+}

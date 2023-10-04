@@ -3,7 +3,9 @@
 }
 
 .header-title {
-    font-size: 36px;
+    font-size: 46px;
+    text-decoration: none;
+    color: #1a0933;
 }
 
 .header-icon-cart {
