@@ -10,14 +10,12 @@ import {cartSlice} from "../../reducers";
 
 import "./book-list.css"
 
-const {bookAddedToCart} = cartSlice.actions
-
-console.log(bookAddedToCart);
 const BookListContainer = ({ fetchBooks, bookAddedToCart }) => {
 
 	const state = useSelector( state => state.books)
-
 	const { list, loading, error } = state
+
+	console.log(state);
 
 	useEffect(() => {
 		fetchBooks()
@@ -32,6 +30,8 @@ const BookListContainer = ({ fetchBooks, bookAddedToCart }) => {
 		</ul>
 	);
 };
+
+const {bookAddedToCart} = cartSlice.actions
 
 const mapDispatchToProps = (dispatch, { bookServiceContext }) => {
 	return {

@@ -22,7 +22,9 @@ const initialState = {
 const cartSlice = createSlice({
 	name: 'cart',
 	initialState,
-	bookAddedToCart
+	reducers: {
+		bookAddedToCart
+	}
 })
 
 export default cartSlice
